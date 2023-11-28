@@ -2,14 +2,14 @@ package com.example.wktechnology;
 
 import com.example.wktechnology.model.entity.Pessoa;
 import com.example.wktechnology.model.repository.PessoaRepository;
-import com.example.wktechnology.utils.Agrupar;
-import com.example.wktechnology.utils.CompatibilidadeSanguinea;
 import com.example.wktechnology.utils.DateFormatter;
 import com.example.wktechnology.utils.enums.EstadoBrasileiro;
 import com.example.wktechnology.utils.enums.Sexo;
 import com.example.wktechnology.utils.enums.TipoSanguineo;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.tools.javac.Main;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,11 +19,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import lombok.extern.slf4j.Slf4j;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +68,7 @@ public class WktechnologyApplication {
 		pessoa.setCpf((String) ((Map<?, ?>) map).get("cpf"));
 		pessoa.setRg((String) ((Map<?, ?>) map).get("rg"));
 
-		pessoa.setDataNascimento(DateFormatter.parseDataNascimento((String) ((Map<?, ?>) map).get("data_nasc")));
+		pessoa.setDataNasc(DateFormatter.parseDataNascimento((String) ((Map<?, ?>) map).get("data_nasc")));
 
 		pessoa.setSexo(  Sexo.fromDescricao((String)  ((Map<?, ?>) map).get("sexo") ));
 

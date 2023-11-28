@@ -10,6 +10,7 @@ import com.example.wktechnology.utils.enums.EstadoBrasileiro;
 import com.example.wktechnology.utils.enums.Sexo;
 import com.example.wktechnology.utils.enums.TipoSanguineo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,9 @@ public class PessoaController {
     @Autowired
     private CompatibilidadeSanguinea compatibilidadeSanguinea;
 
-    @GetMapping
-    public ResponseEntity<List<Pessoa>> listarPessoas() {
-        List<Pessoa> pessoas = pessoaService.listarTodasAsPessoas();
+    @GetMapping("/{offset}/{pagesize}")
+    public ResponseEntity<Page<Pessoa>> listarPessoas(@PathVariable int offset, @PathVariable int pagesize) {
+        Page<Pessoa> pessoas = pessoaService.listarTodasAsPessoas(offset,pagesize);
         return ResponseEntity.ok(pessoas);
     }
 
@@ -54,7 +55,7 @@ public class PessoaController {
     }
 
     @PostMapping("/imcMaiorQuePorSexo")
-    public ResponseEntity<Map<Sexo,Double>> imcMaiorQuePorSexo(@RequestBody LimiteDTO limiteDTO) {
+    public ResponseEntity<Map<String,Double>> imcMaiorQuePorSexo(@RequestBody LimiteDTO limiteDTO) {
         try {
             return ResponseEntity.ok(pessoaService.listarImcMaiorQuePorSexo( limiteDTO.getLimite()));
         } catch (Exception e) {
@@ -67,7 +68,7 @@ public class PessoaController {
     }
 
     @GetMapping("/mediaDeIdadePorSexo")
-    public ResponseEntity<Map<TipoSanguineo,Double>> mediaDeIdadeAgrupadaPorSexo() {
+    public ResponseEntity<Map<String,Double>> mediaDeIdadeAgrupadaPorSexo() {
         try {
             return ResponseEntity.ok(pessoaService.listarIdadeMediaPorSexo());
         } catch (Exception e) {
@@ -80,7 +81,7 @@ public class PessoaController {
     }
 
     @GetMapping("/quantidadeDeDoadoresPorRecptor")
-    public ResponseEntity <Map<TipoSanguineo, Integer>> quantidadeDeDoadoresPorRecptor() {
+    public ResponseEntity <Map<String, Integer>> quantidadeDeDoadoresPorRecptor() {
         try {
             return ResponseEntity.ok(pessoaService.quantidadeDeDoadoresPorReceptor(compatibilidadeSanguinea));
         } catch (Exception e) {

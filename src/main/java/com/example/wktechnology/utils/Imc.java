@@ -24,9 +24,9 @@ public class Imc {
               return imcMedioPorFaixaEtaria;
     }
 
-    public static Map<Sexo, Double> getImcMaiorQueSeparadoPorSexo(Map<Sexo, List<Pessoa>> pessoasPorSexo,Double limite){
+    public static Map<String, Double> getImcMaiorQueSeparadoPorSexo(Map<String, List<Pessoa>> pessoasPorSexo,Double limite){
 
-        Map<Sexo, Double> imcMaiorQuePorSexo = new HashMap<>();
+        Map<String, Double> imcMaiorQuePorSexo = new HashMap<>();
 
         pessoasPorSexo.forEach((sexo, listaPessoas) -> {
             double imcmaiorQue = 0.0;

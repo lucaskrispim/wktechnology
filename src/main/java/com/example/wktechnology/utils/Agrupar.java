@@ -14,27 +14,27 @@ public class Agrupar{
     public static Map<String, List<Pessoa>> agruparPorFaixaEtaria(List<Pessoa> pessoas){
 
         return pessoas.stream()
-                .collect(Collectors.groupingBy(p -> calcularGrupoPorIdade(p.getDataNascimento())));
+                .collect(Collectors.groupingBy(p -> calcularGrupoPorIdade(p.getDataNasc())));
     }
 
-    public static Map<Sexo, List<Pessoa>> agruparPorSexo(List<Pessoa> pessoas){
+    public static Map<String, List<Pessoa>> agruparPorSexo(List<Pessoa> pessoas){
 
         return pessoas.stream()
                 .collect(Collectors.groupingBy(p -> calcularGrupoPorSexo(p.getSexo())));
     }
 
-    public static Map<TipoSanguineo, List<Pessoa>> agruparPorTipoSanguineo(List<Pessoa> pessoas){
+    public static Map<String, List<Pessoa>> agruparPorTipoSanguineo(List<Pessoa> pessoas){
 
         return pessoas.stream()
                 .collect(Collectors.groupingBy(p -> calcularGrupoPorTipoSanguineo(p.getTipoSanguineo())));
     }
 
-    private static Sexo calcularGrupoPorSexo(String sexo){
-        return Sexo.fromDescricao(sexo);
+    private static String calcularGrupoPorSexo(String sexo){
+        return Sexo.fromDescricao(sexo).getDescricao();
     }
 
-    private static TipoSanguineo calcularGrupoPorTipoSanguineo(String tipoSanguineo){
-        return TipoSanguineo.fromName(tipoSanguineo);
+    private static String calcularGrupoPorTipoSanguineo(String tipoSanguineo){
+        return TipoSanguineo.fromDescricao(tipoSanguineo).getDescricao();
     }
 
     private static String calcularGrupoPorIdade(LocalDate dataNascimento) {

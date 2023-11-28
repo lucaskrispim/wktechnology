@@ -77,14 +77,6 @@ public class Pessoa {
 
     // Getters e Setters para todos os campos
 
-    public LocalDate getDataNasc() {
-        return dataNasc;
-    }
-
-    public void setDataNasc(LocalDate dataNasc) {
-        this.dataNasc = dataNasc;
-    }
-
     public Long getId() {
         return id;
     }
@@ -117,16 +109,16 @@ public class Pessoa {
         this.rg = rg;
     }
 
-    public LocalDate getDataNascimento() {
+    public LocalDate getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNasc = dataNascimento;
+    public void setDataNasc(LocalDate dataNasc) {
+        this.dataNasc = dataNasc;
     }
 
     public String getSexo() {
-        return sexo.toString();
+        return sexo.getDescricao();
     }
 
     public void setSexo(Sexo sexo) {
@@ -238,7 +230,7 @@ public class Pessoa {
     }
 
     public String getTipoSanguineo() {
-        return tipoSanguineo.toString();
+        return tipoSanguineo.getDescricao();
     }
 
     public void setTipoSanguineo(TipoSanguineo tipoSanguineo) {

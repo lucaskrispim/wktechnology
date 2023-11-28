@@ -9,12 +9,12 @@ import java.util.Map;
 
 public class Calc {
 
-    public static Map<TipoSanguineo, Double> getIdadeMediaPorTipoSanguineo(Map<TipoSanguineo, List<Pessoa>> pessoasPorTipoSanguineo){
-        Map<TipoSanguineo, Double> idadeMediPorTipoSanguineo = new HashMap<>();
+    public static Map<String, Double> getIdadeMediaPorTipoSanguineo(Map<String, List<Pessoa>> pessoasPorTipoSanguineo){
+        Map<String, Double> idadeMediPorTipoSanguineo = new HashMap<>();
         pessoasPorTipoSanguineo.forEach((tipoSanguineo, listaPessoas) -> {
             double idadeTotal = 0.0;
             for (Pessoa pessoa : listaPessoas) {
-                idadeTotal += Agrupar.getIdade(pessoa.getDataNascimento());
+                idadeTotal += Agrupar.getIdade(pessoa.getDataNasc());
             }
             double idadeMedia = idadeTotal / listaPessoas.size();
             idadeMediPorTipoSanguineo.put(tipoSanguineo, Math.round(idadeMedia * 100.0) / 100.0);
