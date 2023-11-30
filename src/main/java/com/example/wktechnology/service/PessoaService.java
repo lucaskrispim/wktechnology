@@ -1,13 +1,11 @@
 package com.example.wktechnology.service;
 
+import com.example.wktechnology.domain.indicadores.Media;
 import com.example.wktechnology.model.entity.Pessoa;
 import com.example.wktechnology.model.repository.PessoaRepository;
-import com.example.wktechnology.utils.Agrupar;
-import com.example.wktechnology.utils.Calc;
-import com.example.wktechnology.utils.CompatibilidadeSanguinea;
-import com.example.wktechnology.utils.Imc;
-import com.example.wktechnology.utils.enums.Sexo;
-import com.example.wktechnology.utils.enums.TipoSanguineo;
+import com.example.wktechnology.domain.agrupamento.Agrupar;
+import com.example.wktechnology.domain.calculo.Calc;
+import com.example.wktechnology.domain.indicadores.Imc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class PessoaService {
-
 
     @Autowired
     private final PessoaRepository pessoaRepository;
@@ -35,41 +32,64 @@ public class PessoaService {
     }
 
     public List<Pessoa> listarTodasAsPessoas() {
-        return (List<Pessoa>) pessoaRepository.findAll();
+        return pessoaRepository.findAll();
     }
 
     public Map<String, Double> listarImcMedioAgrupadoPorFaixaEtaria(){
 
         List<Pessoa> pessoas = listarTodasAsPessoas();
 
-        Map<String, List<Pessoa>> pessoasPorFaixaEtaria = Agrupar.agruparPorFaixaEtaria(pessoas);
+        Agrupar agrupar = new Agrupar(pessoas);
 
-        return Imc.getImcMedio(pessoasPorFaixaEtaria);
+        Map<String, List<Pessoa>> pessoasPorFaixaEtaria = agrupar.agruparPorFaixaEtaria();
+
+        Calc cal = new Calc(pessoasPorFaixaEtaria);
+
+        return cal.getImcMedioPorGrupoDePessoas(pessoasPorFaixaEtaria);
     }
+
     public Map<String, Double> listarImcMaiorQuePorSexo(Double limite){
 
         List<Pessoa> pessoas = listarTodasAsPessoas();
 
-        Map<String, List<Pessoa>> pessoasPorSexo = Agrupar.agruparPorSexo(pessoas);
+        Agrupar agrupar = new Agrupar(pessoas);
 
-        return Imc.getImcMaiorQueSeparadoPorSexo(pessoasPorSexo,limite);
+        Map<String, List<Pessoa>> pessoasPorSexo = agrupar.agruparPorSexo();
+
+        Calc calc = new Calc(pessoasPorSexo);
+
+        return calc.getImcMedioPorGrupoDePessoasMaiorQue(pessoasPorSexo,limite);
     }
 
     public Map<String, Double> listarIdadeMediaPorSexo(){
 
         List<Pessoa> pessoas = listarTodasAsPessoas();
 
-        Map<String, List<Pessoa>> pessoasPorTipoSanguineo = Agrupar.agruparPorSexo(pessoas);
+        Agrupar agrupar = new Agrupar(pessoas);
 
-        return Calc.getIdadeMediaPorTipoSanguineo(pessoasPorTipoSanguineo);
+        Map<String, List<Pessoa>> pessoasAgrupadasPorSexo = agrupar.agruparPorSexo();
+
+        Calc calc = new Calc(pessoasAgrupadasPorSexo);
+
+        return calc.getMediaDeIdadePorGrupo();
     }
 
     public Map<String, Integer> quantidadeDeDoadoresPorReceptor(CompatibilidadeSanguinea compatibilidadeSanguinea){
         List<Pessoa> pessoas = listarTodasAsPessoas();
 
-        Map<String, List<Pessoa>> pessoasPorTipoSanguineo = Agrupar.agruparPorTipoSanguineo(pessoas);
+        Agrupar agrupar = new Agrupar(pessoas);
 
-        return compatibilidadeSanguinea.calcularDoadoresParaReceptor(pessoasPorTipoSanguineo);
+        Map<String, List<Pessoa>> pessoasPorTipoSanguineo = agrupar.agruparPorTipoSanguineo();
+
+        return compatibilidadeSanguinea.contagemDeDoadoresParaGrupoDeReceptor(pessoasPorTipoSanguineo);
+    }
+
+    public Map<String, List<Pessoa>> doadoresPorReceptor(CompatibilidadeSanguinea compatibilidadeSanguinea){
+        List<Pessoa> pessoas = listarTodasAsPessoas();
+
+        Agrupar agrupar = new Agrupar(pessoas);
+
+        return agrupar.agruparPorTipoSanguineo();
     }
 
     public Optional<Pessoa> encontrarPessoaPorId(Long id) {

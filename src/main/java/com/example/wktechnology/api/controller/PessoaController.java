@@ -5,10 +5,8 @@ import com.example.wktechnology.api.dto.PessoaDTO;
 import com.example.wktechnology.api.mappers.PessoaMapper;
 import com.example.wktechnology.model.entity.Pessoa;
 import com.example.wktechnology.service.PessoaService;
-import com.example.wktechnology.utils.CompatibilidadeSanguinea;
+import com.example.wktechnology.service.CompatibilidadeSanguinea;
 import com.example.wktechnology.utils.enums.EstadoBrasileiro;
-import com.example.wktechnology.utils.enums.Sexo;
-import com.example.wktechnology.utils.enums.TipoSanguineo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -86,6 +84,19 @@ public class PessoaController {
             return ResponseEntity.ok(pessoaService.quantidadeDeDoadoresPorReceptor(compatibilidadeSanguinea));
         } catch (Exception e) {
             String mensagemErro = "Ocorreu um erro ao calcular a quantidade de doadores por receptor: " + e.getMessage();
+            Map<String, String> response = new HashMap<>();
+            response.put("mensagemErro", mensagemErro);
+
+            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/doadoresPorRecptor")
+    public ResponseEntity <Map<String, List<Pessoa>>> doadoresPorRecptor() {
+        try {
+            return ResponseEntity.ok(pessoaService.doadoresPorReceptor(compatibilidadeSanguinea));
+        } catch (Exception e) {
+            String mensagemErro = "Ocorreu um erro ao retornar os doadores por receptor: " + e.getMessage();
             Map<String, String> response = new HashMap<>();
             response.put("mensagemErro", mensagemErro);
 

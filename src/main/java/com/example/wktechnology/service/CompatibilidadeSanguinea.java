@@ -1,8 +1,7 @@
-package com.example.wktechnology.utils;
+package com.example.wktechnology.service;
 
 import com.example.wktechnology.model.entity.Pessoa;
 import com.example.wktechnology.utils.enums.TipoSanguineo;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -62,7 +61,23 @@ public class CompatibilidadeSanguinea {
     }
 
 
-    public Map<String, Integer> calcularDoadoresParaReceptor(Map<String, List<Pessoa>> pessoasPorTipoSanguineo) {
+    public Map<String, List<Pessoa>> doadoresParaGrupoDeReceptor(Map<String, List<Pessoa>> pessoasPorTipoSanguineo) {
+        Map<String, List<Pessoa>> doadoresParaReceptor = new HashMap<>();
+
+
+        for (String receptor : tabelaCompatibilidade.keySet()) {
+            List<Pessoa> pessoasDoadoras = new ArrayList<>();
+            List<String> doadoresPermitidos = tabelaCompatibilidade.get(receptor).get(receberDe);
+            for (String doadorPermitido : doadoresPermitidos) {
+                pessoasDoadoras = pessoasPorTipoSanguineo.getOrDefault(doadorPermitido, new ArrayList<>());
+            }
+            doadoresParaReceptor.put(receptor, pessoasDoadoras);
+        }
+        return doadoresParaReceptor;
+    }
+
+
+    public Map<String, Integer> contagemDeDoadoresParaGrupoDeReceptor(Map<String, List<Pessoa>> pessoasPorTipoSanguineo) {
         Map<String, Integer> doadoresParaReceptor = new HashMap<>();
 
         for (String receptor : tabelaCompatibilidade.keySet()) {
@@ -77,7 +92,6 @@ public class CompatibilidadeSanguinea {
         }
         return doadoresParaReceptor;
     }
-
 
     @Override
     public String toString() {
