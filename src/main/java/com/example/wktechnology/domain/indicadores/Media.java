@@ -2,7 +2,7 @@ package com.example.wktechnology.domain.indicadores;
 
 import java.util.List;
 
-public class Media {
+public class Media extends Indicador {
     private final List<Double> valores;
 
     public Media(List<Double> valores) {
@@ -12,7 +12,7 @@ public class Media {
         this.valores = valores;
     }
 
-    public double getMedia() {
+    public double calcular() {
         double soma = 0;
         for (Double valor : valores) {
             soma += valor;

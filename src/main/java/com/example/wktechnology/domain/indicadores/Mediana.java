@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Mediana {
+public class Mediana extends Indicador {
     private final List<Double> valores;
 
     public Mediana(List<Double> valores) {
@@ -14,7 +14,7 @@ public class Mediana {
         this.valores = valores;
     }
 
-    public double calcularMediana() {
+    public double calcular() {
         List<Double> valoresOrdenados = new ArrayList<>(valores);
         Collections.sort(valoresOrdenados);
 

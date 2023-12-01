@@ -2,7 +2,7 @@ package com.example.wktechnology.domain.indicadores;
 
 import java.util.List;
 
-public class DesvioPadrao {
+public class DesvioPadrao extends Indicador {
     private final List<Double> valores;
 
     public DesvioPadrao(List<Double> valores) {
@@ -12,9 +12,9 @@ public class DesvioPadrao {
         this.valores = valores;
     }
 
-    public double calcularDesvioPadrao() {
+    public double calcular() {
         Media media = new Media(valores);
-        double mediaValor = media.getMedia();
+        double mediaValor = media.calcular();
         double somaDiferencasQuadradas = 0;
 
         for (Double valor : valores) {

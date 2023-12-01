@@ -1,10 +1,10 @@
 package com.example.wktechnology.domain.indicadores;
 
-public class Imc {
+public class Imc extends Indicador {
     private double altura;
     private double peso;
 
-    public Imc(double altura, double peso) {
+    public Imc(double peso, double altura){
 
         if (altura <= 0 || peso <= 0) {
             throw new IllegalArgumentException("Altura e peso devem ser maiores que zero.");
@@ -14,12 +14,12 @@ public class Imc {
         this.peso = peso;
     }
 
-    public double calcularIMC() {
+    public double calcular() {
         return Math.round( ( peso / (altura * altura) ) * 100.0) / 100.0;
     }
 
     public String classificarIMC() {
-        double imc = calcularIMC();
+        double imc = calcular();
 
         if (imc < 16) {
             return "Magreza grave";

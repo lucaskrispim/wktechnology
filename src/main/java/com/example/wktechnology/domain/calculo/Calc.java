@@ -23,12 +23,12 @@ public class Calc {
 
             List<Double> idadesList = listaPessoas.stream().mapToDouble(pessoa -> {
                 Idade idade = new Idade(pessoa);
-                return idade.getIdade();
+                return idade.calcular();
             }).boxed().toList();
 
             Media media = new Media( idadesList );
 
-            idadeMediPorTipoSanguineo.put(grupo, media.getMedia());
+            idadeMediPorTipoSanguineo.put(grupo, media.calcular());
         });
 
         return idadeMediPorTipoSanguineo;
@@ -40,12 +40,12 @@ public class Calc {
 
             List<Double> imcList = listaPessoas.stream().mapToDouble(pessoa -> {
                 Imc imc = new Imc(pessoa.getPeso(),pessoa.getAltura());
-                return imc.calcularIMC();
+                return imc.calcular();
             }).boxed().toList();
 
             Media media = new Media( imcList );
 
-            imcMedioPorgrupo.put(faixaIdade, media.getMedia());
+            imcMedioPorgrupo.put(faixaIdade, media.calcular());
 
         });
 
@@ -58,12 +58,12 @@ public class Calc {
 
             List<Double> imcList = listaPessoas.stream().mapToDouble(pessoa -> {
                 Imc imc = new Imc(pessoa.getPeso(),pessoa.getAltura());
-                return imc.calcularIMC();
+                return imc.calcular();
             }).boxed().filter(imc -> imc > valor).toList();
 
             Media media = new Media( imcList );
 
-            imcMedioPorgrupo.put(faixaIdade, media.getMedia());
+            imcMedioPorgrupo.put(faixaIdade, media.calcular());
 
         });
 

@@ -8,8 +8,8 @@ public class AgruparPorFaixaEtaria {
     public static String getFaixaEtaria(Pessoa pessoa) {
 
         Idade idade = new Idade(pessoa);
-        int idadeValor = idade.getIdade();
-        int faixaEtaria = idadeValor / 10 * 10;
+        double idadeValor = idade.calcular();
+        int faixaEtaria = ((int) idadeValor) / 10 * 10;
         return faixaEtaria + "-" + (faixaEtaria + 9);
     }
 }

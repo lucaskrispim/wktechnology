@@ -6,14 +6,14 @@ import com.example.wktechnology.utils.DateFormatter;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Idade {
+public class Idade extends Indicador {
     private final Pessoa pessoa;
 
     public Idade(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
 
-    public int getIdade() {
+    public double calcular() {
         LocalDate dataAtual = LocalDate.now();
         Period periodo = Period.between(pessoa.getDataNasc(), dataAtual);
         return periodo.getYears();
