@@ -1,5 +1,8 @@
 package com.example.wktechnology.service;
 
+import com.example.wktechnology.domain.agrupamento.AgruparPorFaixaEtaria;
+import com.example.wktechnology.domain.agrupamento.AgruparPorSexo;
+import com.example.wktechnology.domain.agrupamento.AgruparPorTipoSanguineo;
 import com.example.wktechnology.domain.indicadores.Media;
 import com.example.wktechnology.model.entity.Pessoa;
 import com.example.wktechnology.model.repository.PessoaRepository;
@@ -41,7 +44,9 @@ public class PessoaService {
 
         Agrupar agrupar = new Agrupar(pessoas);
 
-        Map<String, List<Pessoa>> pessoasPorFaixaEtaria = agrupar.agruparPorFaixaEtaria();
+        AgruparPorFaixaEtaria agruparPorFaixaEtaria = new AgruparPorFaixaEtaria(agrupar);
+
+        Map<String, List<Pessoa>> pessoasPorFaixaEtaria = agruparPorFaixaEtaria.agrupar();
 
         Calc cal = new Calc(pessoasPorFaixaEtaria);
 
@@ -54,7 +59,9 @@ public class PessoaService {
 
         Agrupar agrupar = new Agrupar(pessoas);
 
-        Map<String, List<Pessoa>> pessoasPorSexo = agrupar.agruparPorSexo();
+        AgruparPorSexo agruparPorSexo = new AgruparPorSexo(agrupar);
+
+        Map<String, List<Pessoa>> pessoasPorSexo = agruparPorSexo.agrupar();
 
         Calc calc = new Calc(pessoasPorSexo);
 
@@ -67,9 +74,11 @@ public class PessoaService {
 
         Agrupar agrupar = new Agrupar(pessoas);
 
-        Map<String, List<Pessoa>> pessoasAgrupadasPorSexo = agrupar.agruparPorSexo();
+        AgruparPorSexo agruparPorSexo = new AgruparPorSexo(agrupar);
 
-        Calc calc = new Calc(pessoasAgrupadasPorSexo);
+        Map<String, List<Pessoa>> pessoasPorSexo = agruparPorSexo.agrupar();
+
+        Calc calc = new Calc(pessoasPorSexo);
 
         return calc.getMediaDeIdadePorGrupo();
     }
@@ -79,9 +88,9 @@ public class PessoaService {
 
         Agrupar agrupar = new Agrupar(pessoas);
 
-        Map<String, List<Pessoa>> pessoasPorTipoSanguineo = agrupar.agruparPorTipoSanguineo();
+        AgruparPorTipoSanguineo agruparPorTipoSanguineo = new AgruparPorTipoSanguineo(agrupar);
 
-        return compatibilidadeSanguinea.contagemDeDoadoresParaGrupoDeReceptor(pessoasPorTipoSanguineo);
+        return compatibilidadeSanguinea.contagemDeDoadoresParaGrupoDeReceptor(agruparPorTipoSanguineo.agrupar());
     }
 
     public Map<String, List<Pessoa>> doadoresPorReceptor(CompatibilidadeSanguinea compatibilidadeSanguinea){

@@ -23,21 +23,21 @@ public class Imc extends Indicador {
 
         if (imc < 16) {
             return "Magreza grave";
-        } else if (imc >= 16 && imc < 16.9) {
+        } else if (imc < 17) {
             return "Magreza moderada";
-        } else if (imc >= 17 && imc < 18.4) {
+        } else if (imc < 18.5) {
             return "Magreza leve";
-        } else if (imc >= 18.5 && imc < 24.9) {
+        } else if (imc < 25) {
             return "Peso saudável";
-        } else if (imc >= 25 && imc < 29.9) {
+        } else if (imc < 30) {
             return "Sobrepeso";
-        } else if (imc >= 30 && imc < 34.9) {
+        } else if (imc < 35) {
             return "Obesidade grau I";
-        } else if (imc >= 35 && imc < 39.9) {
+        } else if (imc < 40) {
             return "Obesidade grau II (severa)";
-        } else if (imc >= 40 && imc < 49.9) {
+        } else if (imc < 50) {
             return "Obesidade grau III (mórbida)";
-        } else if (imc >= 50 && imc < 59.9) {
+        } else if (imc < 60) {
             return "Obesidade grau IV (extrema)";
         } else if (imc >= 60) {
             return "Obesidade grau V (supermórbida)";
