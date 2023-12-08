@@ -2,11 +2,12 @@ package com.example.wktechnology.domain.agrupamento;
 
 import com.example.wktechnology.model.entity.Pessoa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Agrupar{
+public class Agrupar {
 
     private final List<Pessoa> pessoas;
 
@@ -14,22 +15,21 @@ public class Agrupar{
         this.pessoas = pessoas;
     }
 
-    public Map<String, List<Pessoa>> agruparPorFaixaEtaria(){
+    public Map<String, List<Pessoa>> agruparPorFaixaEtaria() {
 
         return pessoas.stream()
                 .collect(Collectors.groupingBy(AgruparPorFaixaEtaria::getFaixaEtaria));
     }
 
-    public Map<String, List<Pessoa>> agruparPorSexo(){
+    public Map<String, List<Pessoa>> agruparPorSexo() {
 
         return pessoas.stream()
                 .collect(Collectors.groupingBy(AgruparPorSexo::getSexo));
     }
 
-    public Map<String, List<Pessoa>> agruparPorTipoSanguineo(){
+    public Map<String, List<Pessoa>> agruparPorTipoSanguineo() {
 
         return pessoas.stream()
                 .collect(Collectors.groupingBy(AgruparPorTipoSanguineo::getTipoSanguineo));
     }
-
 }

@@ -21,7 +21,9 @@ public class Imc extends Indicador {
     public String classificarIMC() {
         double imc = calcular();
 
-        if (imc < 16) {
+        if (imc < 15){
+            return "Magreza extrema";
+        } else if (imc < 16) {
             return "Magreza grave";
         } else if (imc < 17) {
             return "Magreza moderada";
@@ -39,10 +41,8 @@ public class Imc extends Indicador {
             return "Obesidade grau III (mórbida)";
         } else if (imc < 60) {
             return "Obesidade grau IV (extrema)";
-        } else if (imc >= 60) {
-            return "Obesidade grau V (supermórbida)";
         } else {
-            return "Valor de IMC inválido";
+            return "Obesidade grau V (supermórbida)";
         }
     }
 

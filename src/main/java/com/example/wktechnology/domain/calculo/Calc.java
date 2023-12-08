@@ -61,9 +61,11 @@ public class Calc {
                 return imc.calcular();
             }).boxed().filter(imc -> imc > valor).toList();
 
-            Media media = new Media( imcList );
+            if( !imcList.isEmpty() && imcList != null ) {
+                Media media = new Media(imcList);
+                imcMedioPorgrupo.put(faixaIdade, media.calcular());
+            }
 
-            imcMedioPorgrupo.put(faixaIdade, media.calcular());
 
         });
 
